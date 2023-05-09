@@ -2,13 +2,13 @@
 layout: page
 width: expand
 hero:
-    title: How can we help you?
-    subtitle: Search or browse in depth articles and videos on everything on Docs Jekyll theme, from basic theme setup to customisation and development
-    image: knowledge.svg
-    search: true
+    title: 'COTS: COpenAPI Test Synthesis' 
+    subtitle: 
+    image: 
+    search: false
 ---
 
-{% include boxes.html columns="3" title="Browse Topics" subtitle="Chose an option that you need help with or search above" %}
+{% include boxes.html columns="3" title="Browse Documentation" subtitle="Chose an option to get started." %}
 
 {% include featured.html tag="featured" title="Popular Articles" subtitle="Selected featured articles to get you started fast in Jekyll" %}
 
