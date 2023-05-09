@@ -1,3 +1,0 @@
-package examples.cwa
-import examples.cwa.api._
-import examples.cwa.model._

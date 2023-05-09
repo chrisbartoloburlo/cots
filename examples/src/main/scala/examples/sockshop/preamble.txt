@@ -1,3 +1,0 @@
-package examples.sockshop
-import examples.sockshop.api._
-import examples.sockshop.model._

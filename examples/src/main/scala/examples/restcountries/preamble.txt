@@ -1,3 +1,0 @@
-package examples.restcountries
-import examples.restcountries.api._
-import examples.restcountries.model._

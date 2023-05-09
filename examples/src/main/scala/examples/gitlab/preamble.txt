@@ -1,3 +1,0 @@
-package examples.gitlab
-import examples.gitlab.api._
-import examples.gitlab.model._

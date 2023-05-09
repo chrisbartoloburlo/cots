@@ -1,3 +1,0 @@
-package examples.languagetool
-import examples.languagetool.api._
-import examples.languagetool.model._
