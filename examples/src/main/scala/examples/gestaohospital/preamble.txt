@@ -1,0 +1,3 @@
+package examples.gestaohospital
+import examples.gestaohospital.api._
+import examples.gestaohospital.model._

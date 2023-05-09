@@ -1,0 +1,3 @@
+package examples.petclinic
+import examples.petclinic.api._
+import examples.petclinic.model._

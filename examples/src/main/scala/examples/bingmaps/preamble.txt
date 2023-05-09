@@ -1,0 +1,4 @@
+package examples.bingmaps
+import examples.bingmaps.api._
+import examples.bingmaps.model._
+import examples.bingmaps.core._

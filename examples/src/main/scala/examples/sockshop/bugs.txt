@@ -1,0 +1,6 @@
+* DELETE of customers returns escaped string:
+    "{\"status\":true}\n"  instead of  {"status": true}
+
+* MAYBE: GET /customers/{id} gives JSON with an extra "id" field, not expected
+  in the openapi spec
+

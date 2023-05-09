@@ -1,0 +1,12 @@
+*.class
+*.log
+target/
+driver.scala
+.idea/
+.DS_Store
+.bsp/
+spotify/
+debug/S_fs/*
+debug/S_pc/*
+debug/S_ur/*
+knime/

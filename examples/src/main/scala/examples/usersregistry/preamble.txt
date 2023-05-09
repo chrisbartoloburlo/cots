@@ -1,0 +1,3 @@
+package examples.usersregistry
+import examples.usersregistry.api._
+import examples.usersregistry.model._

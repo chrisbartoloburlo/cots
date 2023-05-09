@@ -1,0 +1,2 @@
+S_gitlab=+{!VersionApi.getVersion(apeiKey: String(getApiKey)).?C200(versionResponse: VersionResponse),
+            !MetadataApi.getMetadata(apiKey: String(getApiKey)).?C200(metadataResponse: MetadataResponse)}

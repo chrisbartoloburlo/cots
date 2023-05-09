@@ -1,0 +1,3 @@
+package examples.petstore
+import examples.petstore.api._
+import examples.petstore.model._
