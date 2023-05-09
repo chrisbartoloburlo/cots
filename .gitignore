@@ -1,12 +1,8 @@
-*.class
-*.log
-target/
-driver.scala
-.idea/
+# OS or Editor folders
 .DS_Store
-.bsp/
-spotify/
-debug/S_fs/*
-debug/S_pc/*
-debug/S_ur/*
-knime/
+node_modules
+
+# Jekyllg
+_site
+.sass-cache
+.jekyll-metadata
