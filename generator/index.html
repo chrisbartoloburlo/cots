@@ -1,0 +1,24 @@
+---
+layout: default
+title: Generator
+---
+<style type="text/css" media="screen">
+  #editor { 
+    position: relative;
+    margin: auto;
+    width: 500px;
+    height: 400px;
+  }
+</style>
+
+<div id="editor">S_fs=+{!DefaultApi.addProduct(productName: String(const "Product_1")).?C201(),
+  !DefaultApi.addProduct(productName: String(const "Product_1")).?C201()}
+</div>
+
+<script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/dawn");
+    editor.session.setMode("ace/mode/st");
+</script>
+

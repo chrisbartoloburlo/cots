@@ -10,6 +10,9 @@ left:
   - title: Blog
     url: /blog/
 
+  - title: Generator
+    url: /generator/
+
   # - title: Changelogs
   #   dropdown:
 

@@ -2,7 +2,7 @@
 layout: page
 width: expand
 hero:
-    title: 'COTS: COpenAPI Test Synthesis' 
+    title: 'SeTTS: Session Types Test Synthesis' 
     subtitle: 
     image: 
     search: false
