@@ -6,22 +6,62 @@ var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var stHighlightRules = function () {
     this.$rules = {
       "start": [{
-        token: "name",
-        regex: /^.*?(?=\=)/,
-        next: "constructs"
-      } ],
-      "constructs": [{
-        token: "paren.keyword.operator",
-        regex: "[+]",
-        next: "internalChoice"
-      },{
-        token: "externalChoiceConstruct",
-        regex: "&|?",
-        next: "externalChoice"
+        token: "string.regexp",
+        regex: /^.*?(?=\=)/
+      }, {
+        token: "constant.character",
+        regex: /\+|\!|\?/ 
+      } , {
+        token: "string.regexp",
+        regex: /\.[^\?].*?(?=\()/
+      } , {
+        token: "string.regexp",
+        regex: /\C\d{3}/
+      }, 
+      // {
+        // token: "variable.parameter",
+        // regex: /\(.*?(?=\:)/,
+      // } ,
+       {
+        token: "storage.type",
+        regex: /\:.*?(?=\()/,
+      }, {
+        token: "string.double",
+        regex: /(\")(.*?)(\")/,
       }],
-      "internalChoice": [{
-
-      }]
+      // "constructs": [{
+      //   token: "constant.character",
+      //   regex: /\+\{|\,/,
+      //   next: "internalChoice",
+      // },{
+      //   token: "constant.character",
+      //   regex: /\&/,
+      //   next: "externalChoice"
+      // }],
+      // "internalChoice": [{
+      //   token: "string.regexp",
+      //   regex: /!.*?(?=\()/,
+      //   next: "internalChoiceVariable",
+      // }],
+      // "internalChoiceVariable": [{
+      //   token: "variable.parameter",
+      //   regex: /\(.*?(?=\:)/,
+      //   next: "type"
+      // }],
+      // "type": [{
+      //   token: "storage.type",
+      //   regex: /.*?(?=\()/,
+      //   next: "function"
+      // }],
+      // "function": [{
+      //   token: "meta.function",
+      //   regex: /.*?(?=\ )/,
+      //   next: "variable"
+      // }],
+      // "variable": [{
+      //   token: "string.double",
+      //   regex: /(\")(.*?)(\")/,
+      // }]
     };
 };
 oop.inherits(stHighlightRules, TextHighlightRules);
