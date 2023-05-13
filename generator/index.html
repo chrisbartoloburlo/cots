@@ -2,6 +2,7 @@
 layout: default
 title: Generator
 ---
+<script type="text/javascript" src="jszip.js"></script>
 <style type="text/css" media="screen">
   #steditor { 
     position: relative;
@@ -46,6 +47,8 @@ title: Generator
   </div>
   <div class="row">
     <div class="column">
+      <label for="name">Package Name:</label>
+      <input type="text" id="name" name="name" required size="15">
       <h2>.st file</h2>
       <div id="steditor">S_fs=+{!DefaultApi.addProduct(productName: String(const "Product_1")).?C201(),
         !DefaultApi.addProduct(productName: String(const "Product_1")).?C201()}
@@ -53,19 +56,24 @@ title: Generator
       <div>
         <h2>Util file</h2>
       </div>
-      <div id="utileditor">package examples.featuresservice
-import examples.featuresservice.model.{Feature, ProductConfiguration, Product}
+      <div id="utileditor">package featuresservice
+import featuresservice.model.{Feature, ProductConfiguration, Product}
 import scala.util.Random
 object util {
   //write generator functions and assertions here
   def genInt(rand: Random): Int = {
     rand.nextInt()
   }
+  def const(string: String, rand: Random): String = {
+    string
+  }
   def assertEmpty(name: String): Boolean = {
     name.isEmpty()
   }
 }
       </div>
+      <button onclick="downloadZipFile()">Download files</button>
+      <button onclick="generateDriver()">Generate driver</button>
     </div>
     <div class="column">
       <h2>OpenAPI Spec</h2>
@@ -80,34 +88,108 @@ object util {
 </div>
 
 <script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
+
 <script>
-    var steditor = ace.edit("steditor");
-    steditor.setTheme("ace/theme/dawn");
-    steditor.session.setMode("ace/mode/st");
+  var steditor = ace.edit("steditor");
+   steditor.setTheme("ace/theme/dawn");
+   steditor.session.setMode("ace/mode/st");
 
-    var scalaeditor1 = ace.edit("utileditor");
-    scalaeditor1.setTheme("ace/theme/dawn");
-    scalaeditor1.session.setMode("ace/mode/scala");
+   var scalaeditor1 = ace.edit("utileditor");
+   scalaeditor1.setTheme("ace/theme/dawn");
+   scalaeditor1.session.setMode("ace/mode/scala");
 
-    var openapieditor = ace.edit("openapieditor");
-    openapieditor.setTheme("ace/theme/dawn");
-    openapieditor.session.setMode("ace/mode/yaml");
+   var openapieditor = ace.edit("openapieditor");
+   openapieditor.setTheme("ace/theme/dawn");
 
-    var download = function () {
-      var stCode = steditor.getSession().getValue();
-      console.log(stCode);
-    }
-    function loadFileAsText(){
-      var fileToLoad = document.getElementById("fileToLoad").files[0];
+  function downloadZipFile() {
+     var zip = new JSZip();
+     var stCode = steditor.getSession().getValue();
+     const link = document.createElement("a");
+     const content = stCode;
+     const stfile = new Blob([content]);
+     zip.file(document.getElementById('name').value+".st", stfile);
 
-      var fileReader = new FileReader();
-      fileReader.onload = function(fileLoadedEvent){
-          var textFromFileLoaded = fileLoadedEvent.target.result;
-          // document.getElementById("inputTextToSave").value = textFromFileLoaded;
-          openapieditor.insert(textFromFileLoaded);
+     const utilFile = new Blob([scalaeditor1.getSession().getValue()])
+     zip.file("util.scala", utilFile);
+
+     const openapiFile = new Blob([openapieditor.getSession().getValue()])
+     zip.file("schema.yaml", openapiFile);
+
+     const preamble = new Blob(["package  "+document.getElementById('name').value+"\nimport "+document.getElementById('name').value+".api._\nimport "+document.getElementById('name').value+".model._"])
+     zip.file("preamble.txt", preamble);
+
+     zip.generateAsync({
+        type: "base64"
+      }).then(function(content) {
+        var link = document.createElement('a');
+        link.href = "data:application/zip;base64," + content;
+        link.download = document.getElementById('name').value+".zip";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+  }
+
+  function generateDriver() {
+     var zip = new JSZip();
+     var stCode = steditor.getSession().getValue();
+     const link = document.createElement("a");
+     const content = stCode;
+     const stfile = new Blob([content]);
+     zip.file(document.getElementById('name').value+".st", stfile);
+
+     const utilFile = new Blob([scalaeditor1.getSession().getValue()])
+     zip.file("util.scala", utilFile);
+
+     const openapiFile = new Blob([openapieditor.getSession().getValue()])
+     zip.file("schema.yaml", openapiFile);
+
+     const preamble = new Blob(["package  "+document.getElementById('name').value+"\nimport "+document.getElementById('name').value+".api._\nimport "+document.getElementById('name').value+".model._"])
+     zip.file("preamble.txt", preamble);
+
+     zip.generateAsync({type: "blob"}).then(function(content) {
+      var formdata = new FormData();
+      formdata.append("name", document.getElementById('name').value);
+      formdata.append("file", content, document.getElementById('name').value+".zip");
+      
+      var myHeaders = new Headers();
+      myHeaders.append("Access-Control-Allow-Origin", "*");
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: formdata,
+        redirect: 'follow'
+        
       };
 
-      fileReader.readAsText(fileToLoad, "UTF-8");
-    }
+      fetch("http://16.170.169.102/driver", requestOptions)
+      .then((transfer) => {
+        return transfer.blob();                 // RETURN DATA TRANSFERED AS BLOB
+    }).then((bytes) => {
+        let elm = document.createElement('a');  // CREATE A LINK ELEMENT IN DOM
+        elm.href = URL.createObjectURL(bytes);  // SET LINK ELEMENTS CONTENTS
+        elm.setAttribute('download', document.getElementById('name').value+"_driver.zip"); // SET ELEMENT CREATED 'ATTRIBUTE' TO DOWNLOAD, FILENAME PARAM AUTOMATICALLY
+        elm.click()                             // TRIGGER ELEMENT TO DOWNLOAD
+    }).catch((error) => {
+        console.log(error);                     // OUTPUT ERRORS, SUCH AS CORS WHEN TESTING NON LOCALLY
+    })
+      });
+  }
+   
+   function loadFileAsText(){
+     openapieditor.session.setValue()
+     var fileToLoad = document.getElementById("fileToLoad").files[0];
+     var fileExt = fileToLoad.name.split('.').pop();
+     openapieditor.session.setMode("ace/mode/"+fileExt);
+
+     var fileReader = new FileReader();
+     fileReader.onload = function(fileLoadedEvent){
+         var textFromFileLoaded = fileLoadedEvent.target.result;
+         // document.getElementById("inputTextToSave").value = textFromFileLoaded;
+         openapieditor.insert(textFromFileLoaded);
+     };
+
+     fileReader.readAsText(fileToLoad, "UTF-8");
+   }
 </script>
-<button onclick="download()">Generate driver</button>
