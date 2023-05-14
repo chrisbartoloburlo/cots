@@ -22,8 +22,14 @@ title: Generator
     width: 700px;
     height: 800px;
   }
-  h1,h2 {
+  h1,h2,p {
     text-align: center;
+  }
+  .inputField {
+    /* border: 5px solid; */
+    margin: auto;
+    width: 70%;
+    padding: 10px;
   }
   .column {
     float: left;
@@ -47,12 +53,11 @@ title: Generator
   </div>
   <div class="row">
     <div class="column">
-      <label for="name">Package Name:</label>
-      <input type="text" id="name" name="name" required size="15">
       <h2>.st file</h2>
       <div id="steditor">S_fs=+{!DefaultApi.addProduct(productName: String(const "Product_1")).?C201(),
         !DefaultApi.addProduct(productName: String(const "Product_1")).?C201()}
       </div>
+      <br></br>
       <div>
         <h2>Util file</h2>
       </div>
@@ -72,16 +77,24 @@ object util {
   }
 }
       </div>
-      <button onclick="downloadZipFile()">Download files</button>
-      <button onclick="generateDriver()">Generate driver</button>
+      <br></br>
+      <div class="inputField">
+        <label for="name">Package Name:</label>
+        <input type="text" id="name" name="name" required size="15">
+        <button onclick="downloadZipFile()">Download files</button>
+        <button onclick="generateDriver()">Generate driver</button>
+        <p id = "resultGenerateDriver"></p>
+      </div>
     </div>
     <div class="column">
       <h2>OpenAPI Spec</h2>
-      <tr>
-        <td>Select a File to Load:</td>
-        <td><input type="file" id="fileToLoad"></td>
-        <td><button onclick="loadFileAsText()" data-target="#openapieditor">Load Selected File</button><td>
-      </tr>
+      <div class="inputField">
+        <tr>
+          <td>Select a File to Load:</td>
+          <td><input type="file" id="fileToLoad"></td>
+          <td><button onclick="loadFileAsText()" data-target="#openapieditor">Load Selected File</button><td>
+        </tr>
+      </div>
       <div id="openapieditor"></div>
     </div>
   </div>
@@ -91,90 +104,94 @@ object util {
 
 <script>
   var steditor = ace.edit("steditor");
-   steditor.setTheme("ace/theme/dawn");
-   steditor.session.setMode("ace/mode/st");
+  steditor.setTheme("ace/theme/dawn");
+  steditor.session.setMode("ace/mode/st");
 
-   var scalaeditor1 = ace.edit("utileditor");
-   scalaeditor1.setTheme("ace/theme/dawn");
-   scalaeditor1.session.setMode("ace/mode/scala");
+  var scalaeditor1 = ace.edit("utileditor");
+  scalaeditor1.setTheme("ace/theme/dawn");
+  scalaeditor1.session.setMode("ace/mode/scala");
 
-   var openapieditor = ace.edit("openapieditor");
-   openapieditor.setTheme("ace/theme/dawn");
+  var openapieditor = ace.edit("openapieditor");
+  openapieditor.setTheme("ace/theme/dawn");
 
   function downloadZipFile() {
-     var zip = new JSZip();
-     var stCode = steditor.getSession().getValue();
-     const link = document.createElement("a");
-     const content = stCode;
-     const stfile = new Blob([content]);
-     zip.file(document.getElementById('name').value+".st", stfile);
+    var zip = new JSZip();
+    var stCode = steditor.getSession().getValue();
+    const link = document.createElement("a");
+    const content = stCode;
+    const stfile = new Blob([content]);
+    zip.file(document.getElementById('name').value+".st", stfile);
 
-     const utilFile = new Blob([scalaeditor1.getSession().getValue()])
-     zip.file("util.scala", utilFile);
+    const utilFile = new Blob([scalaeditor1.getSession().getValue()])
+    zip.file("util.scala", utilFile);
 
-     const openapiFile = new Blob([openapieditor.getSession().getValue()])
-     zip.file("schema.yaml", openapiFile);
+    const openapiFile = new Blob([openapieditor.getSession().getValue()])
+    zip.file("schema.yaml", openapiFile);
 
-     const preamble = new Blob(["package  "+document.getElementById('name').value+"\nimport "+document.getElementById('name').value+".api._\nimport "+document.getElementById('name').value+".model._"])
-     zip.file("preamble.txt", preamble);
+    const preamble = new Blob(["package  "+document.getElementById('name').value+"\nimport "+document.getElementById('name').value+".api._\nimport "+document.getElementById('name').value+".model._"])
+    zip.file("preamble.txt", preamble);
 
-     zip.generateAsync({
-        type: "base64"
-      }).then(function(content) {
-        var link = document.createElement('a');
-        link.href = "data:application/zip;base64," + content;
-        link.download = document.getElementById('name').value+".zip";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
+    zip.generateAsync({type: "base64"}).then(function(content) {
+      var link = document.createElement('a');
+      link.href = "data:application/zip;base64," + content;
+      link.download = document.getElementById('name').value+".zip";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
   }
 
   function generateDriver() {
-     var zip = new JSZip();
-     var stCode = steditor.getSession().getValue();
-     const link = document.createElement("a");
-     const content = stCode;
-     const stfile = new Blob([content]);
-     zip.file(document.getElementById('name').value+".st", stfile);
+    var resultGenerateDriver = document.getElementById("resultGenerateDriver");
+    resultGenerateDriver.innerText = "Loading...";
+    var zip = new JSZip();
+    var stCode = steditor.getSession().getValue();
+    const link = document.createElement("a");
+    const content = stCode;
+    const stfile = new Blob([content]);
+    zip.file(document.getElementById('name').value+".st", stfile);
 
-     const utilFile = new Blob([scalaeditor1.getSession().getValue()])
-     zip.file("util.scala", utilFile);
+    const utilFile = new Blob([scalaeditor1.getSession().getValue()])
+    zip.file("util.scala", utilFile);
 
-     const openapiFile = new Blob([openapieditor.getSession().getValue()])
-     zip.file("schema.yaml", openapiFile);
+    const openapiFile = new Blob([openapieditor.getSession().getValue()])
+    zip.file("schema.yaml", openapiFile);
 
-     const preamble = new Blob(["package  "+document.getElementById('name').value+"\nimport "+document.getElementById('name').value+".api._\nimport "+document.getElementById('name').value+".model._"])
-     zip.file("preamble.txt", preamble);
+    const preamble = new Blob(["package  "+document.getElementById('name').value+"\nimport "+document.getElementById('name').value+".api._\nimport "+document.getElementById('name').value+".model._"])
+    zip.file("preamble.txt", preamble);
 
-     zip.generateAsync({type: "blob"}).then(function(content) {
-      var formdata = new FormData();
-      formdata.append("name", document.getElementById('name').value);
-      formdata.append("file", content, document.getElementById('name').value+".zip");
-      
-      var myHeaders = new Headers();
-      myHeaders.append("Access-Control-Allow-Origin", "*");
+    zip.generateAsync({type: "blob"}).then(function(content) {
+    var formdata = new FormData();
+    formdata.append("name", document.getElementById('name').value);
+    formdata.append("file", content, document.getElementById('name').value+".zip");
 
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: formdata,
-        redirect: 'follow'
-        
-      };
+    var myHeaders = new Headers();
+    myHeaders.append("Access-Control-Allow-Origin", "*");
 
-      fetch("http://16.170.169.102/driver", requestOptions)
-      .then((transfer) => {
-        return transfer.blob();                 // RETURN DATA TRANSFERED AS BLOB
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch("http://16.170.169.102/driver", requestOptions)
+    .then((transfer) => {
+      if(transfer.status === 201) {
+        resultGenerateDriver.innerText = "Driver generated successfully"
+      } else {
+        resultGenerateDriver.innerText = "Problem when generating driver"
+      }
+      return transfer.blob();                 // RETURN DATA TRANSFERED AS BLOB
     }).then((bytes) => {
-        let elm = document.createElement('a');  // CREATE A LINK ELEMENT IN DOM
-        elm.href = URL.createObjectURL(bytes);  // SET LINK ELEMENTS CONTENTS
-        elm.setAttribute('download', document.getElementById('name').value+"_driver.zip"); // SET ELEMENT CREATED 'ATTRIBUTE' TO DOWNLOAD, FILENAME PARAM AUTOMATICALLY
-        elm.click()                             // TRIGGER ELEMENT TO DOWNLOAD
+      let elm = document.createElement('a');  // CREATE A LINK ELEMENT IN DOM
+      elm.href = URL.createObjectURL(bytes);  // SET LINK ELEMENTS CONTENTS
+      elm.setAttribute('download', document.getElementById('name').value+"_driver.zip"); // SET ELEMENT CREATED 'ATTRIBUTE' TO DOWNLOAD, FILENAME PARAM AUTOMATICALLY
+      elm.click()                             // TRIGGER ELEMENT TO DOWNLOAD
     }).catch((error) => {
-        console.log(error);                     // OUTPUT ERRORS, SUCH AS CORS WHEN TESTING NON LOCALLY
+      console.log(error);                     // OUTPUT ERRORS, SUCH AS CORS WHEN TESTING NON LOCALLY
     })
-      });
+    });
   }
    
    function loadFileAsText(){
