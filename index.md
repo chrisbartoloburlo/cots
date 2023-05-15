@@ -2,7 +2,7 @@
 layout: page
 width: expand
 hero:
-    title: 'SeTTS: Session Types Test Synthesis' 
+    title: 'SeTTS: Session Type Test Synthesis' 
     subtitle: 
     image: 
     search: false

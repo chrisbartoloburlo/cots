@@ -7,8 +7,8 @@ left:
   - title: Docs
     url: /docs/installation/
 
-  - title: Blog
-    url: /blog/
+  # - title: Blog
+  #   url: /blog/
 
   - title: Generator
     url: /generator/

@@ -10,7 +10,7 @@ description:        Documentation for SeTTS.
 lang:               en
 
 # Site subpath, e.g. /blog
-baseurl:            "/cots"
+baseurl:            ""
 
 # Permalink URLs structure, for permalink style options see: https://jekyllrb.com/docs/permalinks/
 permalink:          /:title/
@@ -27,9 +27,9 @@ navbar:
   
 # Default author settings
 author:
-    name:           Pete Seth
+    name:           Christian Bartolo Burlo
     title:          Lead Developer  
-    avatar:         avatar-tom.png
+    avatar:         chris.JPG
 
 # Author settings, displayed on post and doc pages if front matter references author name e.g. author: peter
 authors:
@@ -83,7 +83,7 @@ share:
 
 # Default footer image settings
 footer:
-    copyright:      Made by <a href="https://unbound.studio/">Unbound Studio</a> in Cleveland.
+    copyright:      Made by <a href="https://github.com/chrisbartoloburlo">Christian Bartolo Burlò</a> at the Gran Sasso Science Institute.
 
 # Disqus comments shortname, requires Disqus account https://disqus.com/
 disqus:
