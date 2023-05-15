@@ -175,7 +175,7 @@ object util {
       redirect: 'follow'
     };
 
-    fetch("cots-service.com/driver", requestOptions)
+    fetch("http://cots-service.com/driver", requestOptions)
     .then((transfer) => {
       if(transfer.status === 201) {
         resultGenerateDriver.innerText = "Driver generated successfully"
