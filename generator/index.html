@@ -102,7 +102,7 @@ object util {
 
 <script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
 
-<script src="//url.to/script.js">
+<script>
   var steditor = ace.edit("steditor");
   steditor.setTheme("ace/theme/dawn");
   steditor.session.setMode("ace/mode/st");
@@ -175,7 +175,7 @@ object util {
       redirect: 'follow'
     };
 
-    fetch("http://16.170.169.102/driver", requestOptions)
+    fetch("cots-service.com/driver", requestOptions)
     .then((transfer) => {
       if(transfer.status === 201) {
         resultGenerateDriver.innerText = "Driver generated successfully"
