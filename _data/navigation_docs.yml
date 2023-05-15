@@ -2,34 +2,39 @@
   docs:
   - installation
   - setup
-  - navigation
-  - footer
-  - posts
-  - docs
-  - comments
-  - analytics
+  # - navigation
+  # - footer
+  # - posts
+  # - docs
+  # - comments
+  # - analytics
 
-- title: Theme Features
+- title: Generating Test Drivers
   docs:
-  - hero
-  - boxes
-  - featured
-  - videos
-  - faq
-  - team
-  - cta
-  - changelog
-  - contact
-  - media
-  - toc
-  - alerts
+  - offline-generation
+  - online-generation
+  # - featured
+  # - videos
+  # - faq
+  # - team
+  # - cta
+  # - changelog
+  # - contact
+  # - media
+  # - toc
+  # - alerts
 
-- title: Customization
+- title: Running Test Drivers
   docs:
-  - translation
-  - customize
-  - development
-  - sources
+  - execute
+  # - customize
+  # - development
+  # - sources
+
+- title: Analysing Test Results
+  docs:
+  - logs
+  - repeatable-tests
 
 - title: Help
   docs:
