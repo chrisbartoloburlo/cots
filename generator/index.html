@@ -54,29 +54,30 @@ title: Generator
   <div class="row">
     <div class="column">
       <h2>.st file</h2>
-      <div id="steditor">S_fs=+{!DefaultApi.addProduct(productName: String(const "Product_1")).?C201(),
-        !DefaultApi.addProduct(productName: String(const "Product_1")).?C201()}
-      </div>
+      <div id="steditor">S_store=!UserApi.addUser(username: String(const "Chris")).?C201().
+        !UserApi.listUsers().?C200(users: "Seq[String]")</div>
       <br></br>
       <div>
         <h2>Util file</h2>
       </div>
-      <div id="utileditor">package featuresservice
-import featuresservice.model._
+      <div id="utileditor">package store
+import store.model._
 import scala.util.Random
 object util {
   //write generator functions and assertions here
   def genInt(rand: Random): Int = {
     rand.nextInt()
   }
-  def const(string: String, rand: Random): String = {
-    string
+  def const(string: String, rand: Random): Option[String] = {
+    Some(string)
   }
   def assertEmpty(name: String): Boolean = {
     name.isEmpty()
   }
-}
-      </div>
+  def getUserFields(rand: Random): UserFields = {
+      UserFields.apply(Some("test"))
+  }
+}</div>
       <br></br>
       <div class="inputField">
         <label for="name">Package Name:</label>

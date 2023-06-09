@@ -2,8 +2,8 @@
 layout: page
 width: expand
 hero:
-    title: 'SeTTS: Session Type Test Synthesis' 
-    subtitle: 
+    title: 'Automated Test Generation for RESTful APIs' 
+    subtitle: 'SeTTS: Session Type Test Synthesis'
     image: 
     search: false
 ---

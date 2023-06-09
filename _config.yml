@@ -38,23 +38,23 @@ authors:
 # Social icons displayed in footer
 social:
     email:
-    website:
-    facebook:       https://www.facebook.com/
+    website: https://www.bartoloburlo.com
+    facebook:
     flickr:
     dribbble:
-    github:
+    github: https://github.com/chrisbartoloburlo
     googleplus:
-    instagram:      https://www.instagram.com/
-    linkedin:
+    instagram:
+    linkedin: https://www.linkedin.com/in/christian-bartolo-burlò-31026685/
     pinterest:
-    twitter:        https://twitter.com/
-    vimeo:          https://vimeo.com/
+    twitter:
+    vimeo:
     youtube:
 
 # Share button
 share:
-    post:           true # Display share buttons on a post page
-    doc:            true # Display share buttons on a doc page
+    post:           false # Display share buttons on a post page
+    doc:            false # Display share buttons on a doc page
     twitter:        username # Enable by adding Twitter handle 
     facebook:       true # Enable by setting true (Facebook handle not required)
 
