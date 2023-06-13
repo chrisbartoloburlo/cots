@@ -50,6 +50,18 @@ title: Generator
 <div>
   <div>
     <h1>Generator</h1>
+    <div style="text-align: center;">
+      <div style="display: inline-block; text-align: left;">
+        Follow these steps to generate and package a test driver:<br>
+        1. Import the schema file in  <code>.yaml</code> format (in the editor on the right).<br>
+        2. Write the specification in the <code>.st</code> editor by:<br>
+        &nbsp; &nbsp; &nbsp;a. Finding the respective <code>operationId</code> of the operation from the OpenAPI spec.<br>
+        &nbsp; &nbsp; &nbsp;b. Writing the <code>operationId</code> prefixed with the respective <code>tag</code> in the <code>.st</code> editor.<br>
+        &nbsp; &nbsp; &nbsp;c. Writing any functions required (such as generators or assertions) in the <code>Util</code> file. <br>
+        3. Once the specification is ready, in the text box next to "Package Name" write the respective package name (<code>store</code> in the case of the example) and click on "Generate Driver".<br>
+        4. In the downloaded file, open a terminal and run "sbt assembly" which will package the driver files, avoiding compilation every time we want to execute the driver. 
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="column">
