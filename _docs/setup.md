@@ -29,14 +29,33 @@ In an external choice `&{?l(P)[A].S, ...}`, the test driver instead waits to rec
     position: relative;
     margin: auto;
     width: 700px;
-    height: 200px;
+    height: 35px;
+  }
+  #openapieditor { 
+    position: relative;
+    margin: auto;
+    width: 700px;
+    height: 180px;
   }
 </style>
 
 ## Example
-<div id="steditor">S_fs=+{!DefaultApi.addProduct(productName: String(const "Product_1")).?C201(),
-          !DefaultApi.addProduct(productName: String(const "Product_1")).?C201()}
-</div>
+<div id="steditor">S_fs=+{!ProductApi.addProduct(productName: String(const "Product_1")).?C201(),
+          !ProductApi.addProduct(productName: String(const "Product_1")).?C201()}</div>
+
+The `ProductApi` from the specification above refers to the `tag` of the particular request (from the OpenAPI specification below) we would like to send. Similarly, the `addProduct` refers to the `operationId` below. 
+
+<div id="openapieditor">/products/{productName}:
+  post:
+    tags: product
+    operationId: addProduct
+    parameters:
+      - name: productName
+        in: path
+        type: string
+    responses:
+      '201': 
+        description: successful operation</div>
 
 <script type="text/javascript" src="../src/ace.js" charset="utf-8"></script>
 
@@ -44,6 +63,12 @@ In an external choice `&{?l(P)[A].S, ...}`, the test driver instead waits to rec
   var steditor = ace.edit("steditor");
   steditor.setTheme("ace/theme/dawn");
   steditor.session.setMode("ace/mode/st");
+  steditor.setReadOnly(true);
+
+  var openapieditor = ace.edit("openapieditor");
+  openapieditor.setTheme("ace/theme/dawn");
+  openapieditor.session.setMode("ace/mode/yaml");
+  openapieditor.setReadOnly(true);
 </script>
 
 

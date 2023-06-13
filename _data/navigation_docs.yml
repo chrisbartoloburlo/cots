@@ -11,8 +11,7 @@
 
 - title: Generating Test Drivers
   docs:
-  - offline-generation
-  - online-generation
+  - generation
   # - featured
   # - videos
   # - faq
