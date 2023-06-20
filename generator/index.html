@@ -54,8 +54,9 @@ title: Generator
   <div class="row">
     <div class="column">
       <h2>.st file</h2>
-      <div id="steditor">S_store=!UserApi.addUser(username: String(const "Chris")).?C201().
-        !UserApi.listUsers().?C200(users: "Seq[String]")</div>
+      <div id="steditor">S_store=!UserApi.addUser(username: String(const "Chris")).?C201(user: User)<util.setUserId(user)>.
+        !UserApi.listUsers().?C200(users: "Seq[String]").
+        !CollectionApi.createCollection(id: Int(getUserId), name: String(const "Chris' collection")).?C201()</div>
       <br></br>
       <div>
         <h2>Util file</h2>
@@ -76,6 +77,14 @@ object util {
   }
   def getUserFields(rand: Random): UserFields = {
       UserFields.apply(Some("test"))
+  }
+  var user: User = null
+  def setUserId(user: User): Boolean = {
+    this.user = user
+    true
+  }
+  def getUserId(rand: Random): Int = {
+    user.id.get
   }
 }</div>
       <br></br>
