@@ -54,9 +54,13 @@ title: Generator
   <div class="row">
     <div class="column">
       <h2>.st file</h2>
-      <div id="steditor">S_store=!UserApi.addUser(username: String(const "Chris")).?C201(user: User)<util.setUserId(user)>.
+      <div id="steditor">S_store=rec X.(+{!UserApi.addUser(username: String(const "Chris")).?C201(user: User)< util.setUserId(user)>.
         !UserApi.listUsers().?C200(users: "Seq[String]").
-        !CollectionApi.createCollection(id: Int(getUserId), name: String(const "Chris' collection")).?C201()</div>
+        !CollectionApi.createCollection(id: Int(getUserId), name: String(const "Chris' collection")).?C201(collection: Collection)< util.checkCollection(collection)>.
+        !CollectionApi.getCollection(id).?C200(collections: "Seq[Collection]")< util.checkCollections(collections)>,
+    !CollectionApi.getCollection(id: Int(getRandomId)).?C404(),
+    !StatusApi.getHealth().?C200(health: Health).X
+})</div>
       <br></br>
       <div>
         <h2>Util file</h2>
@@ -85,6 +89,18 @@ object util {
   }
   def getUserId(rand: Random): Int = {
     user.id.get
+  }
+  def checkCollection(collection: Collection): Boolean = {
+    collection.assignedto.get == user.id.get
+  }
+  def checkCollections(collections: Seq[Collection]): Boolean = {
+    for (collection <- collections){
+      return collection.assignedto.get == user.id.get
+    }
+    true
+  }
+  def getRandomId(rand: Random): Int = {
+    -1
   }
 }</div>
       <br></br>
