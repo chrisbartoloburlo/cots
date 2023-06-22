@@ -32,6 +32,7 @@
 
 - title: Analysing Test Results
   docs:
+  - results
   - logs
   - repeatable-tests
 
